@@ -196,7 +196,7 @@ const DeliveryDashboard = () => {
                             
                             // Trigger reassignment via backend
                             try {
-                                const response = await fetch('https://pikulike.onrender.com/reassign-delivery-boy', {
+                                const response = await fetch('https://pikulike.onrender.com/api/reassign-delivery-boy', {
                                     method: 'POST',
                                     headers: { 'Content-Type': 'application/json' },
                                     body: JSON.stringify({ orderId: order.id })
@@ -305,7 +305,7 @@ const DeliveryDashboard = () => {
             
             // 2. Trigger reassignment via backend
             try {
-                const response = await fetch('https://pikulike.onrender.com/reassign-delivery-boy', {
+                const response = await fetch('https://pikulike.onrender.com/api/reassign-delivery-boy', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ orderId: pendingOrder.id })
