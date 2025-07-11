@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState, useRef } from 'react';
 import { supabase } from '../supabaseClient';
 import ReactModal from 'react-modal';
@@ -165,7 +166,7 @@ export default function FreshMeatPage() {
       const options = {
         amount: amount * 100,
         handler: async function (response) {
-          const orderResponse = await fetch('https://supermart-7x0w.onrender.com/api/create-order', {
+          const orderResponse = await fetch('https://pikulike.onrender.com/create-order', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({

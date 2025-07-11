@@ -196,7 +196,7 @@ const DeliveryDashboard = () => {
                             
                             // Trigger reassignment via backend
                             try {
-                                const response = await fetch('https://supermart-7x0w.onrender.com/api/reassign-delivery-boy', {
+                                const response = await fetch('https://pikulike.onrender.com/reassign-delivery-boy', {
                                     method: 'POST',
                                     headers: { 'Content-Type': 'application/json' },
                                     body: JSON.stringify({ orderId: order.id })
@@ -249,7 +249,7 @@ const DeliveryDashboard = () => {
                 .from('orders')
                 .update({ 
                     assignment_status: 'accepted',
-                    status: 'assigned'
+                    status: 'confirmed' // changed from 'assigned' to 'confirmed'
                 })
                 .eq('id', pendingOrder.id);
                 
@@ -305,7 +305,7 @@ const DeliveryDashboard = () => {
             
             // 2. Trigger reassignment via backend
             try {
-                const response = await fetch('https://supermart-7x0w.onrender.com/api/reassign-delivery-boy', {
+                const response = await fetch('https://pikulike.onrender.com/reassign-delivery-boy', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ orderId: pendingOrder.id })

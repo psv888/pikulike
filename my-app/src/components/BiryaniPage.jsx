@@ -155,7 +155,7 @@ export default function BiryaniPage() {
       const options = {
         amount: amount * 100,
         handler: async function (response) {
-          const orderResponse = await fetch('https://supermart-7x0w.onrender.com/api/create-order', {
+          const orderResponse = await fetch('https://pikulike.onrender.com/api/create-order', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({

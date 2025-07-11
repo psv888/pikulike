@@ -79,10 +79,15 @@ async function assignDeliveryBoyToOrder(order, restaurantId, declinedIds = []) {
     if (restError) console.log('Restaurant fetch error:', restError);
     console.log('Restaurant data:', restaurant);
     
-    if (!restaurant || (restaurant.latitude == null || restaurant.longitude == null)) {
+    if (!restaurant) {
+      console.log('No restaurant found with ID:', restaurantId);
+      return null;
+    }
+    
+    if (!restaurant.latitude || !restaurant.longitude) {
       // Fallback: try geocoding zipcode if lat/lng missing
-      if (!restaurant || !restaurant.zipcode) {
-        console.log('No restaurant or zipcode found');
+      if (!restaurant.zipcode) {
+        console.log('No restaurant zipcode found, cannot calculate distance');
         return null;
       }
       const restLatLng = await getLatLngFromZip(restaurant.zipcode);
@@ -108,16 +113,44 @@ async function assignDeliveryBoyToOrder(order, restaurantId, declinedIds = []) {
       }
     }
 
-    // 3. Get online delivery boys with their current order count
+    // 3. Get ALL delivery boys first (not just online ones) for debugging
+    const { data: allDeliveryBoys, error: allBoysError } = await supabase
+      .from('delivery_personnel')
+      .select('id, full_name, latitude, longitude, zipcode, is_online');
+    if (allBoysError) console.log('All delivery boys fetch error:', allBoysError);
+    console.log('All delivery boys:', allDeliveryBoys);
+
+    // 4. Get online delivery boys
     const { data: deliveryBoys, error: boysError } = await supabase
       .from('delivery_personnel')
       .select('id, full_name, latitude, longitude, zipcode, is_online')
       .eq('is_online', true);
-    if (boysError) console.log('Delivery boys fetch error:', boysError);
+    if (boysError) console.log('Online delivery boys fetch error:', boysError);
     console.log('Online delivery boys:', deliveryBoys);
     console.log('Declined delivery person IDs:', declinedIds);
 
-    // 4. Get current order counts for each delivery boy
+    // If no online delivery boys, try to assign to any delivery boy
+    if (!deliveryBoys || deliveryBoys.length === 0) {
+      console.log('No online delivery boys found. Trying to assign to any delivery boy...');
+      if (allDeliveryBoys && allDeliveryBoys.length > 0) {
+        // Assign to first available delivery boy and set them online
+        const firstBoy = allDeliveryBoys[0];
+        console.log('Assigning to first available delivery boy:', firstBoy.full_name);
+        
+        // Set them online temporarily
+        await supabase
+          .from('delivery_personnel')
+          .update({ is_online: true })
+          .eq('id', firstBoy.id);
+        
+        deliveryBoys = [firstBoy];
+      } else {
+        console.log('No delivery boys found in system');
+        return null;
+      }
+    }
+
+    // 5. Get current order counts for each delivery boy
     const deliveryBoysWithOrders = await Promise.all(
       deliveryBoys.map(async (boy) => {
         const { count } = await supabase
@@ -133,11 +166,11 @@ async function assignDeliveryBoyToOrder(order, restaurantId, declinedIds = []) {
       })
     );
 
-    // 5. Filter out declined delivery boys
+    // 6. Filter out declined delivery boys
     let filteredBoys = deliveryBoysWithOrders.filter(boy => !declinedIds.includes(boy.id));
     console.log('Filtered delivery boys (excluding declined):', filteredBoys.map(b => ({ id: b.id, orders: b.currentOrderCount })));
 
-    // 6. If all online boys have declined, implement round-robin cycling
+    // 7. If all online boys have declined, implement round-robin cycling
     if (filteredBoys.length === 0 && deliveryBoys.length > 0) {
       console.log('All online delivery boys have declined. Implementing round-robin cycling.');
       
@@ -171,7 +204,7 @@ async function assignDeliveryBoyToOrder(order, restaurantId, declinedIds = []) {
       return null;
     }
 
-    // 7. Calculate distances and sort by priority
+    // 8. Calculate distances and sort by priority
     const boysWithDistance = [];
     
     for (const boy of filteredBoys) {
@@ -216,7 +249,7 @@ async function assignDeliveryBoyToOrder(order, restaurantId, declinedIds = []) {
 
     console.log('Boys with distance:', boysWithDistance.map(b => ({ id: b.id, distance: b.distance, orders: b.currentOrderCount })));
 
-    // 8. Sort by distance and order count (prefer closer delivery boys with fewer orders)
+    // 9. Sort by distance and order count (prefer closer delivery boys with fewer orders)
     boysWithDistance.sort((a, b) => {
       // Primary sort by distance
       if (Math.abs(a.distance - b.distance) < 2) { // Within 2km, consider order count
@@ -232,7 +265,7 @@ async function assignDeliveryBoyToOrder(order, restaurantId, declinedIds = []) {
       return null;
     }
 
-    // 9. Update assignment history and assign order
+    // 10. Update assignment history and assign order
     let assignmentHistory = [];
     try {
       assignmentHistory = JSON.parse(order.assignment_history || '[]');

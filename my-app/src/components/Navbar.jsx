@@ -96,7 +96,7 @@ const Navbar = ({ searchQuery, onSearchChange }) => {
         amount: amount * 100, // in paise
         handler: async function (response) {
           // On payment success, create order via backend API
-          const orderResponse = await fetch('https://supermart-7x0w.onrender.com/api/create-order', {
+          const orderResponse = await fetch('https://pikulike.onrender.com/create-order', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
