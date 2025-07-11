@@ -1,0 +1,311 @@
+.owner-dashboard-bg {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #fff7ed 0%, #fef9c3 100%);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 32px 8px;
+}
+
+.owner-dashboard-card {
+  background: #fff;
+  border-radius: 22px;
+  box-shadow: 0 8px 32px rgba(255,77,90,0.10), 0 2px 8px rgba(255,179,71,0.08);
+  max-width: 480px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 32px 20px 24px 20px;
+  position: relative;
+  z-index: 2;
+}
+
+.owner-dashboard-title {
+    text-align: left;
+    color: #e53935;
+    font-size: 2.7rem;
+    font-weight: 900;
+    margin-bottom: 0;
+    letter-spacing: 1.5px;
+    text-shadow: none;
+    line-height: 1.1;
+    padding-left: 6px;
+    background: none;
+    -webkit-background-clip: initial;
+    -webkit-text-fill-color: initial;
+    background-clip: initial;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+.owner-dashboard-logout-btn {
+    background: #ffb347;
+    color: #222;
+    border: none;
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    box-shadow: 0 2px 12px rgba(255,179,71,0.13);
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
+    outline: none;
+    margin-left: 18px;
+    margin-top: 2px;
+    margin-bottom: 0;
+    display: inline-block;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+.owner-dashboard-logout-btn:hover, .owner-dashboard-logout-btn:focus {
+    background: #ffd699;
+    color: #222;
+    box-shadow: 0 4px 18px rgba(255,179,71,0.18);
+    transform: translateY(-2px) scale(1.04);
+}
+
+.owner-dashboard-order-btn {
+    margin-bottom: 24px;
+    padding: 14px 36px;
+    background: linear-gradient(90deg, #1a73e8 0%, #ffb347 100%);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-weight: 800;
+    font-size: 1.18rem;
+    cursor: pointer;
+    box-shadow: 0 2px 12px rgba(26,115,232,0.10);
+    letter-spacing: 0.5px;
+    transition: background 0.18s, box-shadow 0.18s, transform 0.15s;
+    display: block;
+    width: 100%;
+    max-width: 420px;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+.owner-dashboard-order-btn:hover, .owner-dashboard-order-btn:focus {
+    background: linear-gradient(90deg, #ffb347 0%, #1a73e8 100%);
+    color: #fff;
+    box-shadow: 0 4px 18px rgba(26,115,232,0.18);
+    transform: translateY(-2px) scale(1.03);
+}
+
+/* Removed old header styles - now using AdminDashboard-style header */
+
+.owner-dashboard-section {
+  margin-bottom: 32px;
+}
+.owner-dashboard-section h3 {
+  text-align: center;
+  font-weight: 700;
+  margin-bottom: 18px;
+  color: #ff4d5a;
+  font-size: 1.1rem;
+}
+
+.owner-dashboard-dish-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: stretch;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+.owner-dashboard-dish-form input[type="text"],
+.owner-dashboard-dish-form input[type="number"],
+.owner-dashboard-dish-form input[type="file"] {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1.5px solid #eee;
+  font-size: 1rem;
+  height: 42px;
+  margin-bottom: 0;
+  box-sizing: border-box;
+}
+.owner-dashboard-dish-form input[type="file"] {
+  padding: 8px 4px;
+  height: 42px;
+}
+.owner-dashboard-dish-form button {
+  background: linear-gradient(90deg, #7b7dfa 0%, #6c63ff 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 18px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-left: 4px;
+  transition: background 0.2s;
+}
+.owner-dashboard-dish-form button:hover {
+  background: linear-gradient(90deg, #6c63ff 0%, #7b7dfa 100%);
+}
+.owner-dashboard-dish-form .cancel-btn {
+  background: #ff4d5a;
+  color: #fff;
+  margin-left: 0;
+}
+.owner-dashboard-dish-form .cancel-btn:hover {
+  background: #b91c1c;
+}
+
+.owner-dashboard-search {
+  margin: 12px 0;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1.5px solid #eee;
+  width: 100%;
+  max-width: 260px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 1rem;
+}
+
+.owner-dashboard-dishes-list {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.owner-dashboard-dish-card {
+  background: #ffe7c2;
+  border-radius: 14px;
+  box-shadow: 0 2px 8px rgba(255,77,90,0.06);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 18px;
+  padding: 14px 16px;
+  position: relative;
+  transition: box-shadow 0.2s;
+}
+.owner-dashboard-dish-card.editing {
+  background: #fef9c3;
+  box-shadow: 0 2px 8px rgba(255,179,71,0.10);
+}
+.dish-photo {
+  width: 200px;
+  height: 200px;
+  border-radius: 8px;
+  object-fit: cover;
+  box-shadow: 0 2px 8px rgba(255,77,90,0.10);
+  flex-shrink: 0;
+}
+.dish-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+.dish-name {
+  font-weight: 600;
+  font-size: 1.08rem;
+  color: #b36a4a;
+  margin-bottom: 6px;
+}
+.dish-price {
+  color: #888;
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+.dish-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 0;
+  justify-content: center;
+}
+.edit-btn {
+  background: #3ec16c;
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  padding: 7px 16px;
+  font-weight: 600;
+  font-size: 0.98rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.edit-btn:hover {
+  background: #2e9e53;
+}
+.delete-btn {
+  background: #ff4d5a;
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  padding: 7px 16px;
+  font-weight: 600;
+  font-size: 0.98rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.delete-btn:hover {
+  background: #b91c1c;
+}
+
+/* Removed old orders button style - now using AdminDashboard-style order button */
+
+.cancel-btn {
+  background: #ff4d5a;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 18px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-left: 4px;
+  transition: background 0.2s;
+}
+.cancel-btn:hover {
+  background: #b91c1c;
+}
+
+@media (max-width: 600px) {
+  .owner-dashboard-card {
+    padding: 16px 4px 16px 4px;
+    max-width: 99vw;
+  }
+  .owner-dashboard-title {
+    font-size: 2rem;
+  }
+  .owner-dashboard-logout-btn {
+    padding: 10px;
+    font-size: 0.95rem;
+  }
+  .owner-dashboard-order-btn {
+    font-size: 1rem;
+    padding: 12px 24px;
+  }
+  .owner-dashboard-dish-form {
+    flex-direction: column;
+    gap: 10px;
+    align-items: stretch;
+  }
+  .owner-dashboard-dishes-list {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .owner-dashboard-dish-card {
+    gap: 10px;
+    padding: 10px 6px;
+  }
+  .dish-photo {
+    width: 140px;
+    height: 140px;
+  }
+  .dish-name {
+    font-size: 1rem;
+  }
+  .dish-price {
+    font-size: 0.95rem;
+  }
+} 
